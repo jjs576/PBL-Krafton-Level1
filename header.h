@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <thread>
+#include <string>
+#include <queue>
 #include <Windows.h>
 
 #define __RED		std::string("\033[31m")

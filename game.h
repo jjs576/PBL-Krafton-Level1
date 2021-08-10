@@ -17,5 +17,5 @@ public:
 	~Game();
 	void run();
 	void render();
-	void renderObject(int, int, char);
+	void renderObject(int, int, std::string);
 };

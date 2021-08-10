@@ -5,8 +5,11 @@ class Player
 {
 private:
 	int x, y;
+	int old_x, old_y;
 	int speed;
 	int color;
+	std::string character;
+
 public:
 	Player();
 	void moveUp();
@@ -18,4 +21,8 @@ public:
 	void speedDown();
 	int getX();
 	int getY();
+	int getOldX();
+	int getOldY();
+	std::string getCharacter();
+
 };

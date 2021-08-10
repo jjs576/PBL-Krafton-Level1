@@ -2,9 +2,10 @@
 
 IOManager::IOManager()
 {
+	is_end = false;
 	stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
 	if (stdinHandle == INVALID_HANDLE_VALUE)
-		throw std::runtime_error("Failed: GetStdHandle: stdin");
+		throw std::runtime_error("Failed: GetStdHandle");
 	
 	if (!GetConsoleMode(stdinHandle, &terminalModeOrigin))
 		throw std::runtime_error("Failed: GetConsoleMode");
@@ -41,7 +42,7 @@ void IOManager::setTerm(TermMode mode)
 	}
 }
 
-KEY_EVENT_RECORD IOManager::getKey()
+void IOManager::inputKey()
 {
 	DWORD	cNumRead;
 	INPUT_RECORD	input_buffer[1];
@@ -49,10 +50,19 @@ KEY_EVENT_RECORD IOManager::getKey()
 	if (!ReadConsoleInput(stdinHandle, input_buffer, 1, &cNumRead))
 		throw std::runtime_error("Failed: ReadConsoleInput");
 	if (input_buffer[0].EventType == KEY_EVENT)
-		return input_buffer[0].Event.KeyEvent;
-	else
-		return KEY_EVENT_RECORD();
+		input_queue.push(input_buffer[0].Event.KeyEvent);
 	
+}
+
+KEY_EVENT_RECORD IOManager::getKey()
+{
+	KEY_EVENT_RECORD input = { 0, };
+	if (!input_queue.empty())
+	{
+		input = input_queue.front();
+		input_queue.pop();
+	}
+	return input;
 }
 
 void IOManager::clear()
@@ -64,18 +74,4 @@ void IOManager::gotoxy(int x, int y)
 {
 	COORD pos = { x, y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
-}
-
-void IOManager::keyEvent(KEY_EVENT_RECORD key)
-{
-	if (key.bKeyDown)
-	{
-		IOManager::clear();
-		IOManager::gotoxy(0, 0);
-		std::cout << YELLOW("keyEvent") << std::endl;
-		std::cout << key.dwControlKeyState << std::endl;
-		std::cout << key.wRepeatCount << std::endl;
-		std::cout << key.wVirtualKeyCode << std::endl;
-		std::cout << key.wVirtualScanCode << std::endl;
-	}
 }
