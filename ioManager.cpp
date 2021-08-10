@@ -10,11 +10,22 @@ IOManager::IOManager()
 		throw std::runtime_error("Failed: GetConsoleMode");
 	
 	terminalMode = ENABLE_WINDOW_INPUT;
-	
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+
+	GetConsoleCursorInfo(out, &cursorInfo);
+	cursorInfo.bVisible = false;
+	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
 IOManager::~IOManager()
 {
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+
+	GetConsoleCursorInfo(out, &cursorInfo);
+	cursorInfo.bVisible = true;
+	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
 void IOManager::setTerm(TermMode mode)
