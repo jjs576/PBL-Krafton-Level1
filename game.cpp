@@ -17,6 +17,8 @@ void Game::run()
 	for (;;)
 	{
 		input = io.getKey();
+		if (!input.bKeyDown)
+			continue;
 		switch (input.wVirtualKeyCode)
 		{
 		case VK_UP:
