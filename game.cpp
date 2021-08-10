@@ -13,6 +13,7 @@ Game::~Game()
 void Game::run()
 {
 	KEY_EVENT_RECORD input;
+	render();
 
 	for (;;)
 	{
