@@ -44,16 +44,16 @@ void IOManager::setTerm(TermMode mode)
 
 void IOManager::pushKey(KEY_EVENT_RECORD key)
 {
-	input_list.push_back(key);
+	input_deque.push_back(key);
 }
 
 KEY_EVENT_RECORD IOManager::getKey()
 {
 	KEY_EVENT_RECORD input = { 0, };
-	if (!input_list.empty())
+	if (!input_deque.empty())
 	{
-		input = input_list.front();
-		input_list.pop_front();
+		input = input_deque.front();
+		input_deque.pop_front();
 	}
 	return input;
 }
