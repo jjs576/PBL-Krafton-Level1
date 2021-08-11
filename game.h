@@ -10,8 +10,8 @@ private:
 	IOManager	io;
 	Player		player;
 public:
-	static const int boardSizeX = 10;
-	static const int boardSizeY = 10;
+	static const int boardSizeX = 20;
+	static const int boardSizeY = 20;
 public:
 	Game();
 	~Game();

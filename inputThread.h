@@ -2,4 +2,4 @@
 #include "header.h"
 #include "ioManager.h"
 
-void inputThreadRun(IOManager* io);
+void inputThreadRun(IOManager* io, std::mutex* m);

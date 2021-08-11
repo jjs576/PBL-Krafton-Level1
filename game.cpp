@@ -13,13 +13,16 @@ Game::~Game()
 
 void Game::run()
 {
-	std::thread	ioThread(inputThreadRun, &io);
+	std::mutex	m;
+	std::thread	ioThread(inputThreadRun, &io, &m);
 	ioThread.detach();
 	render();
-
+	KEY_EVENT_RECORD	input;
 	while (!io.is_end)
 	{
-		KEY_EVENT_RECORD	input = io.getKey();
+		m.lock();
+		input = io.getKey();
+		m.unlock();
 		if (input.dwControlKeyState == 0)
 			continue;
 		if (!input.bKeyDown)
@@ -47,6 +50,8 @@ void Game::run()
 		}
 		render();
 	}
+	io.gotoxy(0, 0);
+	io.clear();
 }
 
 void Game::render()

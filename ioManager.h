@@ -21,7 +21,7 @@ public:
 	~IOManager();
 
 	void	setTerm(TermMode);
-	void	inputKey();
+	void	pushKey(KEY_EVENT_RECORD key);
 	KEY_EVENT_RECORD	getKey();
 	void	clear();
 	void	gotoxy(int, int);

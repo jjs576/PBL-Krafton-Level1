@@ -42,16 +42,9 @@ void IOManager::setTerm(TermMode mode)
 	}
 }
 
-void IOManager::inputKey()
+void IOManager::pushKey(KEY_EVENT_RECORD key)
 {
-	DWORD	cNumRead;
-	INPUT_RECORD	input_buffer[1];
-
-	if (!ReadConsoleInput(stdinHandle, input_buffer, 1, &cNumRead))
-		throw std::runtime_error("Failed: ReadConsoleInput");
-	if (input_buffer[0].EventType == KEY_EVENT)
-		input_queue.push(input_buffer[0].Event.KeyEvent);
-	
+	input_queue.push(key);
 }
 
 KEY_EVENT_RECORD IOManager::getKey()
