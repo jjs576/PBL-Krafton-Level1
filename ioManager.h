@@ -9,7 +9,7 @@ private:
 	HANDLE	stdinHandle;
 public:
 
-	std::list<KEY_EVENT_RECORD>	input_list;
+	std::deque<KEY_EVENT_RECORD>	input_list;
 	bool	is_end;
 
 public:
