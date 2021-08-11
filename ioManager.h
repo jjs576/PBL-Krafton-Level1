@@ -9,8 +9,8 @@ private:
 	HANDLE	stdinHandle;
 public:
 
-	std::queue<KEY_EVENT_RECORD>	input_queue;
-	bool	is_end;
+	std::queue<KEY_EVENT_RECORD>	inputQueue;
+	bool	isEnd;
 
 public:
 	enum class TermMode

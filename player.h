@@ -32,7 +32,8 @@ private:
 	int old_x, old_y;
 	int speed;
 	std::string character;
-	std::string colored_character;
+	std::string coloredCharacter;
+	std::string skillName;
 	State state;
 
 public:
@@ -40,11 +41,21 @@ public:
 	void setHorizontal(Player::State::Horizontal);
 	void setVertical(Player::State::Vertical);
 	void setColor(Player::State::Color);
+	void setSkillName(std::string);
+	void behavior();
+
 	void move();
 	void moveUp();
 	void moveLeft();
 	void moveRight();
 	void moveDown();
+
+	void skill();
+	void skillUpDash();
+	void skillLeftDash();
+	void skillRightDash();
+	void skillDownDash();
+
 	void speedUp();
 	void speedDown();
 	int getX();

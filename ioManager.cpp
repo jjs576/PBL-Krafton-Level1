@@ -2,7 +2,7 @@
 
 IOManager::IOManager()
 {
-	is_end = false;
+	isEnd = false;
 	stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
 	if (stdinHandle == INVALID_HANDLE_VALUE)
 		throw std::runtime_error("Failed: GetStdHandle");
@@ -44,16 +44,16 @@ void IOManager::setTerm(TermMode mode)
 
 void IOManager::pushKey(KEY_EVENT_RECORD key)
 {
-	input_queue.push(key);
+	inputQueue.push(key);
 }
 
 KEY_EVENT_RECORD IOManager::getKey()
 {
 	KEY_EVENT_RECORD input = { 0, };
-	if (!input_queue.empty())
+	if (!inputQueue.empty())
 	{
-		input = input_queue.front();
-		input_queue.pop();
+		input = inputQueue.front();
+		inputQueue.pop();
 	}
 	return input;
 }

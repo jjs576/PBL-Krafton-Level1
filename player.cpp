@@ -16,7 +16,8 @@ Player::Player()
 	old_y = 0;
 	speed = 1;
 	character = "бс";
-	colored_character = character;
+	coloredCharacter = character;
+	skillName = "";
 }
 
 
@@ -35,24 +36,37 @@ void Player::setColor(Player::State::Color c)
 	state.color = c;
 	switch (state.color) {
 	case State::Color::def:
-		colored_character = character;
+		coloredCharacter = character;
 		break;
 	case State::Color::green:
-		colored_character = GREEN(character);
+		coloredCharacter = GREEN(character);
 		break;
 	case State::Color::red:
-		colored_character = RED(character);
+		coloredCharacter = RED(character);
 		break;
 	case State::Color::yellow:
-		colored_character = YELLOW(character);
+		coloredCharacter = YELLOW(character);
 		break;
 	}
 }
 
-void Player::move()
+void Player::setSkillName(std::string s)
+{
+	skillName = s;
+}
+
+void Player::behavior()
 {
 	old_x = x;
 	old_y = y;
+	if (skillName == "")
+		move();
+	else
+		skill();
+}
+
+void Player::move()
+{
 	switch (state.moveVertical)
 	{
 	case Player::State::Vertical::up:
@@ -105,6 +119,37 @@ void Player::moveLeft()
 		x = 0;
 }
 
+
+void Player::skill()
+{
+	if (skillName == ":UpDash")
+		skillUpDash();
+	else if (skillName == ":LeftDash")
+		skillLeftDash();
+	else if (skillName == ":RightDash")
+		skillRightDash();
+	else if (skillName == ":DownDash")
+		skillDownDash();
+	skillName = "";
+}
+
+void Player::skillUpDash()
+{
+	y = 0;
+}
+void Player::skillLeftDash()
+{
+	x = 0;
+}
+void Player::skillRightDash()
+{
+	x = Game::boardSizeX - 1;
+}
+void Player::skillDownDash()
+{
+	y = Game::boardSizeY - 1;
+}
+
 void Player::speedUp()
 {
 	++speed;
@@ -139,5 +184,5 @@ int Player::getOldY()
 
 std::string Player::getCharacter()
 {
-	return colored_character;
+	return coloredCharacter;
 }

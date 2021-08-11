@@ -3,19 +3,19 @@
 void inputThreadRun(IOManager* io, std::mutex* m)
 {
 	DWORD	cNumRead;
-	INPUT_RECORD	input_buffer[1];
+	INPUT_RECORD	inputBuffer[1];
 
 	for (;;)
 	{
-		if (io->is_end)
+		if (io->isEnd)
 			break;
 		
-		if (!ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), input_buffer, 1, &cNumRead))
+		if (!ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), inputBuffer, 1, &cNumRead))
 			throw std::runtime_error("Failed: ReadConsoleInput");
-		if (input_buffer[0].EventType == KEY_EVENT)
+		if (inputBuffer[0].EventType == KEY_EVENT)
 		{
 			m->lock();
-			io->pushKey(input_buffer[0].Event.KeyEvent);
+			io->pushKey(inputBuffer[0].Event.KeyEvent);
 			m->unlock();
 		}
 	}

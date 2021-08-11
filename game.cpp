@@ -4,6 +4,8 @@
 Game::Game()
 {
 	io.setTerm(IOManager::TermMode::game);
+	lastInputTick = 0;
+	curTick = 0;
 }
 
 Game::~Game()
@@ -13,24 +15,34 @@ Game::~Game()
 
 void Game::run()
 {
-	KEY_EVENT_RECORD	input;
 	std::mutex	m;
 	std::thread	ioThread(inputThreadRun, &io, &m);
 	ioThread.detach();
 	render();
-	int tick = 0;
-	while (!io.is_end)
+	curTick = 0;
+	while (!io.isEnd)
 	{
 		timer(33);
 		m.lock();
-		input = io.getKey();
+		KEY_EVENT_RECORD input= io.getKey();
 		m.unlock();
-		inputControl(input);
+		if (input.wVirtualKeyCode != 0)
+		{
+			lastInputTick = curTick;
+			inputVector.push_back(input);
+			inputControl(input);
+		}
+		comboCheck();
 		//render
-		player.move();
+		io.gotoxy(0, 21);
+		std::cout << "                                                                          ";
+		io.gotoxy(0, 21);
+		for (auto it = inputVector.begin(); it != inputVector.end(); ++it)
+			std::cout << it->wVirtualKeyCode << " ";
+		player.behavior();
 		render();
 		io.gotoxy(0, 22);
-		std::cout << "Tick :" << ++tick;
+		std::cout << "Tick :" << ++curTick;
 	}
 	io.gotoxy(0, 0);
 	io.clear();
@@ -61,7 +73,6 @@ void Game::timer(int time)
 
 void Game::inputControl(KEY_EVENT_RECORD input)
 {
-
 	if (input.bKeyDown)
 		switch (input.wVirtualKeyCode)
 		{
@@ -90,7 +101,7 @@ void Game::inputControl(KEY_EVENT_RECORD input)
 			player.setColor(Player::State::Color::yellow);
 			break;
 		case VK_ESCAPE:
-			io.is_end = true;
+			io.isEnd = true;
 		}
 	else
 	{
@@ -106,4 +117,17 @@ void Game::inputControl(KEY_EVENT_RECORD input)
 			break;
 		}
 	}
+}
+
+void Game::comboCheck()
+{
+	std::string skill;
+	if ((skill = keyManager.checkCombo(inputVector)) != "")
+	{
+		io.gotoxy(0, 24);
+		player.setSkillName(skill);
+		inputVector.clear();
+	}
+	if (curTick - lastInputTick > 5)
+		inputVector.clear();
 }

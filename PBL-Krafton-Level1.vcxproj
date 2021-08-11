@@ -142,11 +142,12 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="inputThread.cpp" />
     <ClCompile Include="ioManager.cpp" />
+    <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="combo.h" />
+    <ClInclude Include="keyManager.h" />
     <ClInclude Include="inputThread.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="game.h" />
