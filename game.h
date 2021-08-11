@@ -19,4 +19,5 @@ public:
 	void render();
 	void renderObject(int, int, std::string);
 	void timer(int);
+	void inputControl(KEY_EVENT_RECORD);
 };

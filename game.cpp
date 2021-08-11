@@ -25,29 +25,9 @@ void Game::run()
 		m.lock();
 		input = io.getKey();
 		m.unlock();
-		if (input.bKeyDown)
-			switch (input.wVirtualKeyCode)
-			{
-			case VK_UP:
-				player.moveUp();
-				break;
-			case VK_DOWN:
-				player.moveDown();
-				break;
-			case VK_LEFT:
-				player.moveLeft();
-				break;
-			case VK_RIGHT:
-				player.moveRight();
-				break;
-			case VK_SPACE:
-				player.changeColor();
-				break;
-			case VK_ESCAPE:
-				io.is_end = true;
-				break;
-			}
-
+		inputControl(input);
+		//render
+		player.move();
 		render();
 		io.gotoxy(0, 21);
 		std::cout << "                                                                               ";
@@ -85,6 +65,53 @@ void Game::timer(int time)
 		if (end - start >= time)
 			break;
 	}
+}
 
-		
+void Game::inputControl(KEY_EVENT_RECORD input)
+{
+
+	if (input.bKeyDown)
+		switch (input.wVirtualKeyCode)
+		{
+		case VK_UP:
+			player.setVertical(Player::State::Vertical::up);
+			break;
+		case VK_DOWN:
+			player.setVertical(Player::State::Vertical::down);
+			break;
+		case VK_LEFT:
+			player.setHorizontal(Player::State::Horizontal::left);
+			break;
+		case VK_RIGHT:
+			player.setHorizontal(Player::State::Horizontal::right);
+			break;
+		case VK_SPACE:
+			player.setColor(Player::State::Color::def);
+			break;
+		case 'R':
+			player.setColor(Player::State::Color::red);
+			break;
+		case 'G':
+			player.setColor(Player::State::Color::green);
+			break;
+		case 'Y':
+			player.setColor(Player::State::Color::yellow);
+			break;
+		case VK_ESCAPE:
+			io.is_end = true;
+		}
+	else
+	{
+		switch (input.wVirtualKeyCode)
+		{
+		case VK_UP:
+		case VK_DOWN:
+			player.setVertical(Player::State::Vertical::none);
+			break;
+		case VK_LEFT:
+		case VK_RIGHT:
+			player.setHorizontal(Player::State::Horizontal::none);
+			break;
+		}
+	}
 }
