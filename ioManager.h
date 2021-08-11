@@ -12,7 +12,7 @@ public:
 	bool	is_end;
 
 public:
-	enum TermMode
+	enum class TermMode
 	{
 		game,
 		origin,

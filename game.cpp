@@ -3,12 +3,12 @@
 
 Game::Game()
 {
-	io.setTerm(io.game);
+	io.setTerm(IOManager::TermMode::game);
 }
 
 Game::~Game()
 {
-	io.setTerm(io.origin);
+	io.setTerm(IOManager::TermMode::origin);
 }
 
 void Game::run()
