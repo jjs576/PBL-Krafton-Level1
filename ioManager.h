@@ -7,8 +7,9 @@ private:
 	DWORD	terminalMode;
 	DWORD	terminalModeOrigin;
 	HANDLE	stdinHandle;
-	std::queue<KEY_EVENT_RECORD>	input_queue;
 public:
+
+	std::list<KEY_EVENT_RECORD>	input_list;
 	bool	is_end;
 
 public:

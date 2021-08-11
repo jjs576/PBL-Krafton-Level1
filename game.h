@@ -18,4 +18,5 @@ public:
 	void run();
 	void render();
 	void renderObject(int, int, std::string);
+	void timer(int);
 };
