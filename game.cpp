@@ -29,14 +29,6 @@ void Game::run()
 		//render
 		player.move();
 		render();
-		io.gotoxy(0, 21);
-		std::cout << "                                                                               ";
-		io.gotoxy(0, 21);
-		m.lock();
-		std::cout << "key :";
-		for (auto it = io.input_deque.begin(); it != io.input_deque.end(); ++it)
-			std::cout << "(" << it->wVirtualKeyCode << ","<< it->bKeyDown << ") ";
-		m.unlock();
 		io.gotoxy(0, 22);
 		std::cout << "Tick :" << ++tick;
 	}

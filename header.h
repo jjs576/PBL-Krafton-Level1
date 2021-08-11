@@ -4,7 +4,7 @@
 #include <thread>
 #include <mutex>
 #include <string>
-#include <deque>
+#include <queue>
 #include <Windows.h>
 
 #define __RED		std::string("\033[31m")
