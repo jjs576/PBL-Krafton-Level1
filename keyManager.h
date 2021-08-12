@@ -24,6 +24,6 @@ private:
 public:
 	KeyManager();
 	std::string checkCombo(std::vector<KEY_EVENT_RECORD> combo);
-
 	std::string keyToString(WORD key, BOOL press);
+	void insertCombo(std::vector<std::string> combo);
 };

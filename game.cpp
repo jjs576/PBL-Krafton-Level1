@@ -124,7 +124,6 @@ void Game::comboCheck()
 	std::string skill;
 	if ((skill = keyManager.checkCombo(inputVector)) != "")
 	{
-		io.gotoxy(0, 24);
 		player.setSkillName(skill);
 		inputVector.clear();
 	}
