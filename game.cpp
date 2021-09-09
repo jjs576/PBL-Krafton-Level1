@@ -1,63 +1,70 @@
 #include "game.h"
-#include "inputThread.h"
 
 Game::Game()
 {
-	io.setTerm(IOManager::TermMode::game);
-	lastInputTick = 0;
+	consoleManager.setTerm(ConsoleManager::TermMode::game);
+	startTick = clock();
 	curTick = 0;
+	inputManager = &InputManager::getInstance();
+	sceneManager = &SceneManager::getInstance();
+	fileManager = &FileManager::getInstance();
+	socketManager = &SocketManager::getInstance();
 }
 
 Game::~Game()
 {
-	io.setTerm(IOManager::TermMode::origin);
+	consoleManager.setTerm(ConsoleManager::TermMode::origin);
+	delete inputManager;
+	delete fileManager;
+	delete socketManager;
 }
 
 void Game::run()
 {
-	std::mutex	m;
-	std::thread	ioThread(inputThreadRun, &io, &m);
-	ioThread.detach();
-	render();
-	curTick = 0;
-	while (!io.isEnd)
+	std::thread	inputThread(inputThreadFunc, &inputMutex);
+	std::thread socketThread(socketThreadFunc, &socketMutex);
+	
+	inputThread.detach();
+	socketThread.detach();
+
+	sceneManager->start();
+	for (;;)
 	{
-		timer(33);
-		m.lock();
-		KEY_EVENT_RECORD input= io.getKey();
-		m.unlock();
-		if (input.wVirtualKeyCode != 0)
-		{
-			lastInputTick = curTick;
-			inputVector.push_back(input);
-			inputControl(input);
-		}
-		comboCheck();
-		//render
-		io.gotoxy(0, 21);
-		std::cout << "                                                                          ";
-		io.gotoxy(0, 21);
-		for (auto it = inputVector.begin(); it != inputVector.end(); ++it)
-			std::cout << it->wVirtualKeyCode << " ";
-		player.behavior();
+		if (sceneManager->getCurSceneId() == SceneManager::SceneId::None)
+			break;
+		timer(33); // 30fps
+		curTick = clock() - startTick;
+		update();
 		render();
-		io.gotoxy(0, 22);
-		std::cout << "Tick :" << ++curTick;
 	}
-	io.gotoxy(0, 0);
-	io.clear();
+	renderObject(0, 0, ":clear");
+}
+
+void Game::update()
+{
+	sceneManager->update();
 }
 
 void Game::render()
 {
-	renderObject(player.getOldX(), player.getOldY(), "  ");
-	renderObject(player.getX(), player.getY(), player.getCharacter());
+	for (;;)
+	{
+		std::tuple<int, int, std::string> object = sceneManager->popRenderQueue();
+		if (std::get<2>(object) == ":empty")
+			break;
+		renderObject(std::get<0>(object), std::get<1>(object), std::get<2>(object));
+	}
 }
 
 void Game::renderObject(int x, int y, std::string c)
 {
-	io.gotoxy(x * 2, y);
-	std::cout << c;
+	if (c == ":clear")
+		ConsoleManager::clear();
+	else
+	{
+		ConsoleManager::gotoxy(x * 2, y);
+		std::cout << c;
+	}
 }
 
 void Game::timer(int time)
@@ -71,62 +78,3 @@ void Game::timer(int time)
 	}
 }
 
-void Game::inputControl(KEY_EVENT_RECORD input)
-{
-	if (input.bKeyDown)
-		switch (input.wVirtualKeyCode)
-		{
-		case VK_UP:
-			player.setVertical(Player::State::Vertical::up);
-			break;
-		case VK_DOWN:
-			player.setVertical(Player::State::Vertical::down);
-			break;
-		case VK_LEFT:
-			player.setHorizontal(Player::State::Horizontal::left);
-			break;
-		case VK_RIGHT:
-			player.setHorizontal(Player::State::Horizontal::right);
-			break;
-		case VK_SPACE:
-			player.setColor(Player::State::Color::def);
-			break;
-		case 'R':
-			player.setColor(Player::State::Color::red);
-			break;
-		case 'G':
-			player.setColor(Player::State::Color::green);
-			break;
-		case 'Y':
-			player.setColor(Player::State::Color::yellow);
-			break;
-		case VK_ESCAPE:
-			io.isEnd = true;
-		}
-	else
-	{
-		switch (input.wVirtualKeyCode)
-		{
-		case VK_UP:
-		case VK_DOWN:
-			player.setVertical(Player::State::Vertical::none);
-			break;
-		case VK_LEFT:
-		case VK_RIGHT:
-			player.setHorizontal(Player::State::Horizontal::none);
-			break;
-		}
-	}
-}
-
-void Game::comboCheck()
-{
-	std::string skill;
-	if ((skill = keyManager.checkCombo(inputVector)) != "")
-	{
-		player.setSkillName(skill);
-		inputVector.clear();
-	}
-	if (curTick - lastInputTick > 5)
-		inputVector.clear();
-}

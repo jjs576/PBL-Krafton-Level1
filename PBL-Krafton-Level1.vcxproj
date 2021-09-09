@@ -139,20 +139,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fileManager.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="inputThread.cpp" />
-    <ClCompile Include="ioManager.cpp" />
-    <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="playScene.cpp" />
+    <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="socketManager.cpp" />
+    <ClCompile Include="statusScene.cpp" />
+    <ClCompile Include="threads.cpp" />
+    <ClCompile Include="consoleManager.cpp" />
+    <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="menuScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="keyManager.h" />
-    <ClInclude Include="inputThread.h" />
+    <ClInclude Include="fileManager.h" />
+    <ClInclude Include="inputManager.h" />
+    <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="socketManager.h" />
+    <ClInclude Include="threads.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="header.h" />
-    <ClInclude Include="ioManager.h" />
+    <ClInclude Include="consoleManager.h" />
+    <ClInclude Include="scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

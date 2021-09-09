@@ -1,8 +1,7 @@
-#include "ioManager.h"
+#include "consoleManager.h"
 
-IOManager::IOManager()
+ConsoleManager::ConsoleManager()
 {
-	isEnd = false;
 	stdinHandle = GetStdHandle(STD_INPUT_HANDLE);
 	if (stdinHandle == INVALID_HANDLE_VALUE)
 		throw std::runtime_error("Failed: GetStdHandle");
@@ -19,7 +18,7 @@ IOManager::IOManager()
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-IOManager::~IOManager()
+ConsoleManager::~ConsoleManager()
 {
 	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cursorInfo;
@@ -29,7 +28,7 @@ IOManager::~IOManager()
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
-void IOManager::setTerm(TermMode mode)
+void ConsoleManager::setTerm(TermMode mode)
 {
 	switch (mode)
 	{
@@ -42,29 +41,14 @@ void IOManager::setTerm(TermMode mode)
 	}
 }
 
-void IOManager::pushKey(KEY_EVENT_RECORD key)
-{
-	inputQueue.push(key);
-}
-
-KEY_EVENT_RECORD IOManager::getKey()
-{
-	KEY_EVENT_RECORD input = { 0, };
-	if (!inputQueue.empty())
-	{
-		input = inputQueue.front();
-		inputQueue.pop();
-	}
-	return input;
-}
-
-void IOManager::clear()
+void ConsoleManager::clear()
 {
 	system("cls");
 }
 
-void IOManager::gotoxy(int x, int y)
+void ConsoleManager::gotoxy(int x, int y)
 {
 	COORD pos = { (short)x, (short)y };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
+

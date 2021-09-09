@@ -18,7 +18,7 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ioManager.cpp">
+    <ClCompile Include="consoleManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
@@ -27,15 +27,33 @@
     <ClCompile Include="player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="inputThread.cpp">
+    <ClCompile Include="threads.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="keyManager.cpp">
+    <ClCompile Include="inputManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="menuScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="fileManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="socketManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="playScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="statusScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ioManager.h">
+    <ClInclude Include="consoleManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="header.h">
@@ -47,10 +65,22 @@
     <ClInclude Include="player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="inputThread.h">
+    <ClInclude Include="threads.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="keyManager.h">
+    <ClInclude Include="inputManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="fileManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="socketManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

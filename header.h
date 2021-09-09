@@ -6,6 +6,8 @@
 #include <string>
 #include <queue>
 #include <list>
+#include <tuple>
+#include <set>
 #include <Windows.h>
 
 #define __RED		std::string("\033[31m")

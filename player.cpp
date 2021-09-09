@@ -1,6 +1,71 @@
 #include "player.h"
 #include "game.h"
 
+
+
+Player::Combo::Combo()
+{
+	child.resize(2560);
+	for (auto it = child.begin(); it != child.end(); ++it)
+		*it = NULL;
+	skillName = "";
+}
+
+Player::Combo::~Combo()
+{
+	for (auto it = child.begin(); it != child.end(); ++it)
+		if (*it != NULL)
+			delete* it;
+}
+
+void Player::Combo::insert(std::vector<std::string> combo, size_t index)
+{
+	if (combo.size() <= index)
+		return;
+	if (combo[index][0] == ':')
+	{
+		this->skillName = combo[index];
+		return;
+	}
+	int next = std::atoi(combo[index].c_str());
+	if (child[next] == NULL)
+		child[next] = new Combo();
+	child[next]->insert(combo, index + 1);
+}
+
+std::string Player::Combo::find(std::vector<std::string> combo, size_t index)
+{
+	if (combo.size() <= 1)
+		return "";
+	if (combo.size() <= index)
+		return "";
+	std::string value = combo[index];
+	int next = std::atoi(value.c_str());
+	if (value == "" && this->skillName != "")
+		return this->skillName;
+	if (child[next] == NULL)
+		return "";
+	return child[next]->find(combo, index + 1);
+}
+
+std::string Player::checkCombo(std::vector<KEY_EVENT_RECORD> combo)
+{
+	std::vector<std::string> comboString;
+	for (auto it = combo.begin(); it != combo.end(); ++it)
+		comboString.push_back(keyToString(it->wVirtualKeyCode, it->bKeyDown));
+	comboString.push_back("");
+	return this->combo.find(comboString, 0);
+}
+
+std::string Player::keyToString(WORD key, BOOL press)
+{
+	return std::to_string(key) + std::to_string(press);
+}
+
+void Player::insertCombo(std::vector<std::string> combo)
+{
+	this->combo.insert(combo, 0);
+}
 Player::State::State()
 {
 	moveVertical = Vertical::none;
@@ -10,6 +75,15 @@ Player::State::State()
 
 Player::Player()
 {
+	std::vector < std::string > up_dash = { keyToString(VK_UP, 1), keyToString(VK_UP, 0), keyToString(VK_UP, 1), keyToString(VK_UP, 0), ":UpDash" };
+	std::vector < std::string > left_dash = { keyToString(VK_LEFT, 1), keyToString(VK_LEFT, 0), keyToString(VK_LEFT, 1), keyToString(VK_LEFT, 0), ":LeftDash" };
+	std::vector < std::string > right_dash = { keyToString(VK_RIGHT, 1), keyToString(VK_RIGHT, 0), keyToString(VK_RIGHT, 1), keyToString(VK_RIGHT, 0), ":RightDash" };
+	std::vector < std::string > down_dash = { keyToString(VK_DOWN, 1), keyToString(VK_DOWN, 0), keyToString(VK_DOWN, 1), keyToString(VK_DOWN, 0), ":DownDash" };
+	insertCombo(up_dash);
+	insertCombo(left_dash);
+	insertCombo(right_dash);
+	insertCombo(down_dash);
+
 	x = 0;
 	y = 0;
 	old_x = 0;
@@ -18,8 +92,8 @@ Player::Player()
 	character = "бс";
 	coloredCharacter = character;
 	skillName = "";
-}
 
+}
 
 void Player::setHorizontal(Player::State::Horizontal h)
 {
