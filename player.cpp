@@ -56,7 +56,7 @@ std::string Player::checkCombo(std::vector<KEY_EVENT_RECORD> combo)
 	comboString.push_back("");
 	return this->combo.find(comboString, 0);
 }
-
+  
 std::string Player::keyToString(WORD key, BOOL press)
 {
 	return std::to_string(key) + std::to_string(press);
@@ -141,6 +141,8 @@ void Player::behavior()
 
 void Player::move()
 {
+	old_x = x;
+	old_y = y;
 	switch (state.moveVertical)
 	{
 	case Player::State::Vertical::up:
@@ -175,15 +177,15 @@ void Player::moveUp()
 void Player::moveRight()
 {
 	x += speed;
-	if (x >= Game::boardSizeX)
-		x = Game::boardSizeX - 1;
+	if (x >= boardSizeX)
+		x = boardSizeX - 1;
 }
 
 void Player::moveDown()
 {
 	y += speed;
-	if (y >= Game::boardSizeY)
-		y = Game::boardSizeY - 1;
+	if (y >= boardSizeY)
+		y = boardSizeY - 1;
 }
 
 void Player::moveLeft()
@@ -217,11 +219,11 @@ void Player::skillLeftDash()
 }
 void Player::skillRightDash()
 {
-	x = Game::boardSizeX - 1;
+	x = boardSizeX - 1;
 }
 void Player::skillDownDash()
 {
-	y = Game::boardSizeY - 1;
+	y = boardSizeY - 1;
 }
 
 void Player::speedUp()

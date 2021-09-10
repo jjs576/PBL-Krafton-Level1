@@ -1,11 +1,10 @@
 #pragma once
 #include "header.h"
+#include "player.h"
 
 class Scene
 {
 protected:
-	std::string sceneName;
-
 public:
 	virtual void start() = 0;
 	virtual void render() = 0;
@@ -28,12 +27,18 @@ class PlayScene : public Scene
 {
 private:
 	bool isOnline;
-	std::vector<std::vector<int> > map;
+	Player player;
+	int boardSize;
+	int score;
 public:
+	
 	void start();
 	void render();
 	void update();
-	void comboCheck();
+	void changePlayerStatus();
+	void sceneControl();
+	void renderFrame();
+	//void comboCheck();
 };
 
 

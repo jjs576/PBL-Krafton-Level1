@@ -27,14 +27,13 @@ private:
 
 
 private:
+	void checkInput();
 	void update();
 	void render();
 	void renderObject(int, int, std::string);
 	void timer(int);
 
 public:
-	const static int boardSizeX = 20;
-	const static int boardSizeY = 20;
 	Game();
 	~Game();
 	void run();

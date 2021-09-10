@@ -27,6 +27,8 @@ public:
 		Color color;
 		State();
 	};
+	int		boardSizeX;
+	int		boardSizeY;
 private:
 
 	class Combo

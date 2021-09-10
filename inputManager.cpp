@@ -20,6 +20,22 @@ KEY_EVENT_RECORD InputManager::getKey()
 	return input;
 }
 
+void InputManager::insertInputSet(KEY_EVENT_RECORD input)
+{
+	inputSet.insert(std::make_tuple(input.wVirtualKeyCode, input.bKeyDown));
+}
+
+void InputManager::clearInputSet()
+{
+	inputSet.clear();
+}
+
+
+bool InputManager::findKey(WORD key, BOOL press)
+{
+	return inputSet.find(std::make_tuple(key, press)) != inputSet.end();
+}
+
 InputManager::InputManager()
 {
 

@@ -23,14 +23,13 @@ void SceneManager::start()
 
 void SceneManager::update()
 {
-	getInput();
 	if (curScene)
 		curScene->update();
 }
 
-void SceneManager::pushRenderQueue(std::tuple<int, int, std::string> object)
+void SceneManager::pushRenderQueue(int x, int y, std::string c)
 {
-	renderQueue.push(object);
+	renderQueue.push(std::make_tuple(x, y, c));
 }
 
 std::tuple<int, int, std::string> SceneManager::popRenderQueue()
@@ -46,7 +45,6 @@ void SceneManager::changeScene(SceneId id)
 {
 	delete curScene;
 	curSceneId = id;
-
 	switch (id)
 	{
 	case SceneId::Menu:
@@ -61,25 +59,12 @@ void SceneManager::changeScene(SceneId id)
 	default:
 		curScene = 0;
 	}
+	pushRenderQueue(0, 0, ":clear");
+	if (curScene)
+		curScene->start();
 }
 
 SceneManager::SceneId SceneManager::getCurSceneId()
 {
 	return curSceneId;
-}
-
-void SceneManager::getInput()
-{
-	for (;;)
-	{
-		KEY_EVENT_RECORD rawInput = InputManager::getInstance().getKey();
-		if (rawInput.wVirtualKeyCode == 0)
-			break;
-		input.insert(std::make_tuple(rawInput.wVirtualKeyCode, rawInput.bKeyDown));
-	}
-}
-
-bool SceneManager::findKey(std::tuple<BOOL, WORD> key)
-{
-	return input.find(key) != input.end();
 }

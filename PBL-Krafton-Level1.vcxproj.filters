@@ -13,75 +13,99 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{d809b286-7e12-497e-9989-277496b7bca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Manager">
+      <UniqueIdentifier>{5462f2ed-0215-46d2-aa39-25a06aef2549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Core">
+      <UniqueIdentifier>{e6335220-7e90-4ff4-a2d8-4f37ddea0cee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager">
+      <UniqueIdentifier>{2be78e47-04fe-45a9-9393-e47f3368c1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{ef5aee37-2b89-4b9c-a2b2-523af9a0edff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Scene">
+      <UniqueIdentifier>{407c0208-b19d-43ee-addb-f8a344f1f8b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Objects">
+      <UniqueIdentifier>{99067fcb-909b-43c7-bfed-1dad713de35f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Objects">
+      <UniqueIdentifier>{74a02386-baee-4858-89fc-1e6b5aeb9fc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="consoleManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="threads.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="inputManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="menuScene.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Core</Filter>
     </ClCompile>
     <ClCompile Include="fileManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="socketManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
     <ClCompile Include="sceneManager.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="playScene.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="socketManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="consoleManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="inputManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
     <ClCompile Include="statusScene.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="playScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="menuScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>소스 파일\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="consoleManager.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="game.h">
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="header.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="threads.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="inputManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Core</Filter>
     </ClInclude>
     <ClInclude Include="fileManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="socketManager.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Manager</Filter>
     </ClInclude>
     <ClInclude Include="sceneManager.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="socketManager.h">
+      <Filter>헤더 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="consoleManager.h">
+      <Filter>헤더 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="inputManager.h">
+      <Filter>헤더 파일\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>헤더 파일\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,35 +3,28 @@
 
 void MenuScene::start()
 {
-	SceneManager::getInstance();
 	render();
 }
 
 void MenuScene::render()
 {
-	SceneManager::getInstance().pushRenderQueue(std::make_tuple(0, 0, "1. Single Play"));
-	SceneManager::getInstance().pushRenderQueue(std::make_tuple(0, 1, "2. Multiple Play"));
-	SceneManager::getInstance().pushRenderQueue(std::make_tuple(0, 2, "3. Status"));
-	SceneManager::getInstance().pushRenderQueue(std::make_tuple(0, 3, "4. Exit"));
+	SceneManager::getInstance().pushRenderQueue(0, 0, "1. Play Game");
+	SceneManager::getInstance().pushRenderQueue(0, 1, "2. Status");
+	SceneManager::getInstance().pushRenderQueue(0, 2, "3. Exit");
 }
 
 void MenuScene::update()
 {
-	if (SceneManager::getInstance().findKey(std::make_tuple('1', true)))
+	if (InputManager::getInstance().findKey('1', true))
 	{
 		SceneManager::getInstance().changeScene(SceneManager::SceneId::Play);
 	}
-	else if (SceneManager::getInstance().findKey(std::make_tuple('2', true)))
-	{
-		SceneManager::getInstance().changeScene(SceneManager::SceneId::Play);
-	}
-	else if (SceneManager::getInstance().findKey(std::make_tuple('3', true)))
+	else if (InputManager::getInstance().findKey('2', true))
 	{
 		SceneManager::getInstance().changeScene(SceneManager::SceneId::Status);
 	}
-	else if (SceneManager::getInstance().findKey(std::make_tuple('4', true)))
+	else if (InputManager::getInstance().findKey('3', true))
 	{
 		SceneManager::getInstance().changeScene(SceneManager::SceneId::None);
 	}
-
 }

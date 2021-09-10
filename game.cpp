@@ -15,6 +15,7 @@ Game::~Game()
 {
 	consoleManager.setTerm(ConsoleManager::TermMode::origin);
 	delete inputManager;
+	delete sceneManager;
 	delete fileManager;
 	delete socketManager;
 }
@@ -34,11 +35,25 @@ void Game::run()
 			break;
 		timer(33); // 30fps
 		curTick = clock() - startTick;
+		checkInput();
 		update();
 		render();
+		inputManager->clearInputSet();
 	}
 	renderObject(0, 0, ":clear");
 }
+
+void Game::checkInput()
+{
+	for (;;)
+	{
+		KEY_EVENT_RECORD rawInput = inputManager->getKey();
+		if (rawInput.wVirtualKeyCode == 0)
+			break;
+		inputManager->insertInputSet(rawInput);
+	}
+}
+
 
 void Game::update()
 {
