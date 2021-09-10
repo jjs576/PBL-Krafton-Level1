@@ -22,7 +22,6 @@ public:
 
 };
 
-
 class PlayScene : public Scene
 {
 private:
@@ -45,10 +44,10 @@ public:
 class StatusScene : public Scene
 {
 private:
-
+	
 public:
 	void start();
 	void render();
 	void update();
-
+	void renderScore();
 };

@@ -29,6 +29,8 @@ void Game::run()
 	socketThread.detach();
 
 	sceneManager->start();
+	fileManager->initStatus();
+	fileManager->loadStatus();
 	for (;;)
 	{
 		if (sceneManager->getCurSceneId() == SceneManager::SceneId::None)

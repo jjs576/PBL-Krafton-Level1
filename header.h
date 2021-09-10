@@ -8,6 +8,8 @@
 #include <list>
 #include <tuple>
 #include <set>
+#include <map>
+#include <fstream>
 #include <Windows.h>
 
 #define __RED		std::string("\033[31m")

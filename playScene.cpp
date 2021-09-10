@@ -1,6 +1,7 @@
 #include "scene.h"
 #include "sceneManager.h"
 #include "inputManager.h"
+#include "fileManager.h"
 
 void PlayScene::start()
 {
@@ -24,7 +25,7 @@ void PlayScene::render()
 {
 	SceneManager::getInstance().pushRenderQueue(player.getOldX() + 1, player.getOldY() + 1, "  ");
 	SceneManager::getInstance().pushRenderQueue(player.getX() + 1, player.getY() + 1, player.getCharacter());
-	
+	SceneManager::getInstance().pushRenderQueue(4, 22, std::to_string(score));
 }
 
 void PlayScene::changePlayerStatus()
@@ -66,7 +67,10 @@ void PlayScene::changePlayerStatus()
 void PlayScene::sceneControl()
 {
 	if (InputManager::getInstance().findKey(VK_ESCAPE, true))
+	{
+		FileManager::getInstance().saveStatus(score);
 		SceneManager::getInstance().changeScene(SceneManager::SceneId::Menu);
+	}
 }
 
 void PlayScene::renderFrame()
@@ -82,4 +86,5 @@ void PlayScene::renderFrame()
 		SceneManager::getInstance().pushRenderQueue(0, i, "¦¢");
 		SceneManager::getInstance().pushRenderQueue(boardSize + 1, i, "¦¢");
 	}
+	SceneManager::getInstance().pushRenderQueue(0, 22, "score : ");
 }
