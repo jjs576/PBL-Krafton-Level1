@@ -27,6 +27,7 @@ class PlayScene : public Scene
 private:
 	bool isOnline;
 	Player player;
+	Object other;
 	int boardSize;
 	int score;
 public:

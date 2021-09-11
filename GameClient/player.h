@@ -1,7 +1,8 @@
 #pragma once
 #include "header.h"
+#include "object.h"
 
-class Player
+class Player :public Object
 {
 public:
 	struct State {
@@ -47,11 +48,8 @@ private:
 	Combo combo;
 
 
-	int x, y;
-	int old_x, old_y;
 	int speed;
-	std::string character;
-	std::string coloredCharacter;
+	//std::string coloredCharacter;
 	std::string skillName;
 	State state;
 
@@ -59,7 +57,7 @@ public:
 	Player();
 	void setHorizontal(Player::State::Horizontal);
 	void setVertical(Player::State::Vertical);
-	void setColor(Player::State::Color);
+	//void setColor(Player::State::Color);
 	void setSkillName(std::string);
 	void behavior();
 
@@ -77,12 +75,6 @@ public:
 
 	void speedUp();
 	void speedDown();
-	int getX();
-	int getY();
-	int getOldX();
-	int getOldY();
-	std::string getCharacter();
-
 
 	std::string checkCombo(std::vector<KEY_EVENT_RECORD> combo);
 	std::string keyToString(WORD key, BOOL press);

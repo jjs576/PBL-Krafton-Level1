@@ -1,6 +1,6 @@
 #include "player.h"
 #include "game.h"
-
+#include "socketManager.h"
 
 
 Player::Combo::Combo()
@@ -66,6 +66,7 @@ void Player::insertCombo(std::vector<std::string> combo)
 {
 	this->combo.insert(combo, 0);
 }
+
 Player::State::State()
 {
 	moveVertical = Vertical::none;
@@ -89,8 +90,8 @@ Player::Player()
 	old_x = 0;
 	old_y = 0;
 	speed = 1;
-	character = "бс";
-	coloredCharacter = character;
+	character = "б┌";
+	//coloredCharacter = character;
 	skillName = "";
 
 }
@@ -104,7 +105,7 @@ void Player::setVertical(Player::State::Vertical v)
 {
 	state.moveVertical = v;
 }
-
+/*
 void Player::setColor(Player::State::Color c)
 {
 	state.color = c;
@@ -123,7 +124,7 @@ void Player::setColor(Player::State::Color c)
 		break;
 	}
 }
-
+*/
 void Player::setSkillName(std::string s)
 {
 	skillName = s;
@@ -165,6 +166,10 @@ void Player::move()
 	default:
 		break;
 	}
+	if (SocketManager::getInstance().isConnected())
+		if (state.moveHorizontal != Player::State::Horizontal::none || state.moveVertical != Player::State::Vertical::none)
+			SocketManager::getInstance().pushSendQueue(getTransferData());
+
 }
 
 void Player::moveUp()
@@ -238,27 +243,4 @@ void Player::speedDown()
 		speed = 1;
 }
 
-int Player::getX()
-{
-	return x;
-}
 
-int Player::getY()
-{
-	return y;
-}
-
-int Player::getOldX()
-{
-	return old_x;
-}
-
-int Player::getOldY()
-{
-	return old_y;
-}
-
-std::string Player::getCharacter()
-{
-	return coloredCharacter;
-}

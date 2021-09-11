@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PBL-Krafton-Level1", "PBL-Krafton-Level1.vcxproj", "{E1429FAC-FAB4-46C0-B832-3A2543D10663}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClient", "GameClient.vcxproj", "{E1429FAC-FAB4-46C0-B832-3A2543D10663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1E39C176-4F08-4D66-96C5-4C2B5377F553}
+		SolutionGuid = {7FDA84A1-186D-493E-9766-8FBD9EF91067}
 	EndGlobalSection
 EndGlobal

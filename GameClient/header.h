@@ -1,4 +1,8 @@
 #pragma once
+#pragma comment(lib, "ws2_32")
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS
+
 
 #include <iostream>
 #include <thread>
@@ -10,7 +14,7 @@
 #include <set>
 #include <map>
 #include <fstream>
-#include <Windows.h>
+#include <WinSock2.h>
 
 #define __RED		std::string("\033[31m")
 #define __GREEN		std::string("\033[32m")

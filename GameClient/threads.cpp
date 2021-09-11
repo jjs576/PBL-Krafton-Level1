@@ -24,7 +24,6 @@ void inputThreadFunc(std::mutex* m)
 void socketThreadFunc(std::mutex* m)
 {
 	SocketManager& socketManager = SocketManager::getInstance();
-
 	for (;;)
 	{
 		if (SceneManager::getInstance().getCurSceneId() == SceneManager::SceneId::None)
@@ -32,6 +31,41 @@ void socketThreadFunc(std::mutex* m)
 		if (SceneManager::getInstance().getCurSceneId() == SceneManager::SceneId::Play)
 		{
 
+			std::thread recvThread(socketRecvThreadFunc);
+			std::thread sendThread(socketSendThreadFunc);
+
+			recvThread.join();
+			sendThread.join();
+			socketManager.closeSocket();
+		}
+	}
+}
+
+void socketRecvThreadFunc()
+{
+	SocketManager& socketManager = SocketManager::getInstance();
+	for (;;)
+	{
+		if (SceneManager::getInstance().getCurSceneId() != SceneManager::SceneId::Play)
+			break;
+		if (socketManager.isConnected())
+		{
+			socketManager.recvMsg();
+		}
+	}
+}
+
+void socketSendThreadFunc()
+{
+	SocketManager& socketManager = SocketManager::getInstance();
+	for (;;)
+	{
+		if (SceneManager::getInstance().getCurSceneId() != SceneManager::SceneId::Play)
+			break;
+		if (socketManager.isConnected())
+		{
+
+			socketManager.sendMsg();
 		}
 	}
 }

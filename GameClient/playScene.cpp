@@ -2,6 +2,7 @@
 #include "sceneManager.h"
 #include "inputManager.h"
 #include "fileManager.h"
+#include "socketManager.h"
 
 void PlayScene::start()
 {
@@ -10,6 +11,9 @@ void PlayScene::start()
 	player.boardSizeY = boardSize;
 	score = 0;
 	renderFrame();
+	SocketManager::getInstance().setup();
+	SocketManager::getInstance().connectServer();
+
 }
 
 void PlayScene::update()
@@ -17,6 +21,7 @@ void PlayScene::update()
 	++score;
 	changePlayerStatus();
 	player.move();
+	other.setPosition(SocketManager::getInstance().popRecvQueue());
 	render();
 	sceneControl();
 }
@@ -26,6 +31,8 @@ void PlayScene::render()
 	SceneManager::getInstance().pushRenderQueue(player.getOldX() + 1, player.getOldY() + 1, "  ");
 	SceneManager::getInstance().pushRenderQueue(player.getX() + 1, player.getY() + 1, player.getCharacter());
 	SceneManager::getInstance().pushRenderQueue(4, 22, std::to_string(score));
+	SceneManager::getInstance().pushRenderQueue(other.getOldX() + 1, other.getOldY() + 1, "  ");
+	SceneManager::getInstance().pushRenderQueue(other.getX() + 1, other.getY() + 1, other.getCharacter());
 }
 
 void PlayScene::changePlayerStatus()
@@ -52,6 +59,7 @@ void PlayScene::changePlayerStatus()
 	else if (InputManager::getInstance().findKey(VK_RIGHT, false))
 		player.setHorizontal(Player::State::Horizontal::none);
 
+	/*
 	//change color
 	if (InputManager::getInstance().findKey('G', true))
 		player.setColor(Player::State::Color::green);
@@ -61,7 +69,7 @@ void PlayScene::changePlayerStatus()
 		player.setColor(Player::State::Color::yellow);
 	else if (InputManager::getInstance().findKey(VK_SPACE, true))
 		player.setColor(Player::State::Color::def);
-	
+	*/
 }
 
 void PlayScene::sceneControl()
@@ -69,6 +77,7 @@ void PlayScene::sceneControl()
 	if (InputManager::getInstance().findKey(VK_ESCAPE, true))
 	{
 		FileManager::getInstance().saveStatus(score);
+		SocketManager::getInstance().pushSendQueue(":close");
 		SceneManager::getInstance().changeScene(SceneManager::SceneId::Menu);
 	}
 }

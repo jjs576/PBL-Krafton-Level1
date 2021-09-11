@@ -6,3 +6,5 @@
 
 void inputThreadFunc(std::mutex* m);
 void socketThreadFunc(std::mutex* m);
+void socketRecvThreadFunc();
+void socketSendThreadFunc();
